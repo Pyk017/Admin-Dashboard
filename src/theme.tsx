@@ -163,7 +163,7 @@ export const themeSettings = (mode: PaletteMode) => {
             },
           }),
     },
-    typograhy: {
+    typography: {
       fontFamily: ["Fira Code", "monospace"].join(","),
       fontSize: 12,
       h1: {
