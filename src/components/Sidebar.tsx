@@ -5,7 +5,6 @@ import {
   MenuItem,
   SubMenu,
   useProSidebar,
-  sidebarClasses,
 } from "react-pro-sidebar";
 import { Box, Typography, IconButton, Avatar, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -22,6 +21,7 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import Divider from "@mui/material/Divider";
 
 type ItemType = {
   title: string;
@@ -52,10 +52,9 @@ const Item = ({
       rootStyles={{
         "& .ps-menu-label": {
           color: `${colors.grey[100]}`,
-          display: `${collapsed ? "none" : "flex"}`,
         },
         "& .ps-menu-button": {
-          paddingLeft: "1rem",
+          paddingLeft: `${collapsed ? "1.2rem" : "0rem"}`,
         },
       }}
     >
@@ -70,6 +69,18 @@ const Sidebar = () => {
   const { collapseSidebar, collapsed } = useProSidebar();
   const [selected, setSelected] = useState("Dashboard");
 
+  const submenuRootStyles = {
+    "& .ps-submenu-content": {
+      backgroundColor: "transparent !important",
+    },
+    "& .ps-submenu-content .ps-menuitem-root:hover .ps-menu-icon": {
+      color: "#868dfb !important",
+    },
+    "& .ps-submenu-content .ps-menuitem-root:hover .ps-menu-label": {
+      color: "#868dfb !important",
+    },
+  };
+
   return (
     <Box display="flex" maxHeight="100%">
       <ProSidebar
@@ -78,19 +89,22 @@ const Sidebar = () => {
             backgroundColor: `${colors.primary[400]} !important`,
           },
           "& .ps-menuitem-root": {
-            padding: "1rem !important",
+            padding: "1rem 0rem !important",
           },
-          "& .ps-menuitem-root:hover, .ps-menuitem-root:hover .ps-menu-label": {
-            color: "#868dfb !important",
+          "& .ps-menuitem-root.ps-submenu-root:hover .ps-menu-button": {
+            backgroundColor: "#767ef30d !important",
           },
+          "& .ps-menuitem-root.ps-submenu-root:hover .ps-submenu-content .ps-menu-button":
+            {
+              backgroundColor: "transparent !important",
+            },
           "& .ps-menuitem-root.ps-active, .ps-menuitem-root.ps-active .ps-menu-label":
             {
               color: "#6870fa !important",
-              padding: "0rem !important",
             },
           "& .ps-menu-button": {
             backgroundColor: "transparent !important",
-            padding: `${collapsed ? "0px" : "0 20px !important"}`,
+            padding: `${collapsed ? "1rem" : "0 20px !important"}`,
           },
           ".ps-sidebar-root": {
             borderRight: "0px !important",
@@ -154,7 +168,7 @@ const Sidebar = () => {
             </Box>
           )}
 
-          <Box paddingLeft={collapsed ? undefined : "1rem"}>
+          <Box>
             <Item
               title="Dashboard"
               to="/"
@@ -163,21 +177,95 @@ const Sidebar = () => {
               setSelected={setSelected}
               collapsed={collapsed}
             />
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Data
-            </Typography>
-            <Item
-              title="Manage Team"
-              to="/team"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-              collapsed={collapsed}
-            />
+            <Divider />
+            <SubMenu label="Data" defaultOpen rootStyles={submenuRootStyles}>
+              <Item
+                title="Manage Team"
+                to="/team"
+                icon={<PeopleOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+                collapsed={collapsed}
+              />
+              <Item
+                title="Contacts Information"
+                to="/contacts"
+                icon={<ContactsOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+                collapsed={collapsed}
+              />
+              <Item
+                title="Invoices Balances"
+                to="/invoices"
+                icon={<ReceiptOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+                collapsed={collapsed}
+              />
+            </SubMenu>
+            <Divider />
+            <SubMenu label="Pages" rootStyles={submenuRootStyles}>
+              <Item
+                title="Profile Form"
+                to="/form"
+                icon={<PersonOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+                collapsed={collapsed}
+              />
+              <Item
+                title="Calendar"
+                to="/calendar"
+                icon={<CalendarTodayOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+                collapsed={collapsed}
+              />
+              <Item
+                title="FAQ Page"
+                to="/faq"
+                icon={<HelpOutlineOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+                collapsed={collapsed}
+              />
+            </SubMenu>
+            <Divider />
+            <SubMenu label="Charts" rootStyles={submenuRootStyles}>
+              <Item
+                title="Bar Chart"
+                to="/bar"
+                icon={<BarChartOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+                collapsed={collapsed}
+              />
+              <Item
+                title="Pie Chart"
+                to="/pie"
+                icon={<PieChartOutlineOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+                collapsed={collapsed}
+              />
+              <Item
+                title="Line Chart"
+                to="/line"
+                icon={<TimelineOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+                collapsed={collapsed}
+              />
+              <Item
+                title="Geography Chart"
+                to="/geography"
+                icon={<MapOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+                collapsed={collapsed}
+              />
+            </SubMenu>
           </Box>
         </Menu>
       </ProSidebar>
